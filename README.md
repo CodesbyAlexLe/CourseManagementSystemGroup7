@@ -23,7 +23,7 @@ Student Interface:
 - Browse Departments
 - Add Courses to their cart
 - Proceed To Checkout
-- 
+  
 # Concepts Used
 - OOP (Object-oriented programming)
 - Inheritance and Polymorphism
