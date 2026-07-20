@@ -2,3 +2,9 @@
 - Alex Le
 - Nikita Zaripov
 - Liban Abdulahi
+
+# Course Management System
+
+# Features
+
+# Concepts Used
