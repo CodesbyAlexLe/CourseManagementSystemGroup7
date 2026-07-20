@@ -27,4 +27,5 @@ Student Interface:
 # Concepts Used
 - OOP (Object-oriented programming)
 - Inheritance and Polymorphism
+- Dynamic Memory Allocation
 - File Handling (CSV) 
