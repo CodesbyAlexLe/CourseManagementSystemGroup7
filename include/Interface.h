@@ -30,3 +30,9 @@ private:
     void browseDepartments();
     void listCoursesInDepartment(Department& dept);
     void addCourseToCart(Department& dept);
+
+    // Input Helpers (all loop until a valid value is entered
+    int getMenuChoice(int minVal, int maxVal, const std::string& prompt);
+    std::string getNonEmptyString(const std::string& prompt);
+    double getPositiveDouble(const std::string& prompt);
+};
