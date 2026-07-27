@@ -1,7 +1,12 @@
+#pragma once
 #include <string>
 #include <vector>
-#include "DataStore.h"
-#include "CartItem.h"
+#include "department.h"
+
+//Shared input validation helpers used by Interface, AdminInterface, and StudentInterface. All loop until a valid value is entered, or exit the program cleanly if the input stream is closed
+int getMenuChoice(int minVal, int maxVal, const std::string& prompt);
+std::string getNonEmptyString(const std::string& prompt);
+double getPositiveDouble(const std::string& prompt);
 
 class Interface {
 public:
@@ -9,30 +14,8 @@ public:
     void run();
 
 private:
-    DataStore store;
-    std::vector<CartItem> cart;
+    std::vector<Department> departments;
     std::string dataFilePath;
 
-    //Initial Menu
     void showInitialMenu();
-
-    //Admin Interface
-    void adminMenu();
-    void listDepartments();
-    void addDepartment();
-    void addCourseToDepartment();
-    void saveChanges();
-
-    // Student Interface
-    void studentMenu();
-    void showCart();
-    void checkout();
-    void browseDepartments();
-    void listCoursesInDepartment(Department& dept);
-    void addCourseToCart(Department& dept);
-
-    // Input Helpers (all loop until a valid value is entered
-    int getMenuChoice(int minVal, int maxVal, const std::string& prompt);
-    std::string getNonEmptyString(const std::string& prompt);
-    double getPositiveDouble(const std::string& prompt);
 };
