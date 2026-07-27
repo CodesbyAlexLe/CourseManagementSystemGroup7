@@ -11,3 +11,10 @@ public:
 private:
     std::vector<Department>& departments;
     Cart cart;
+
+    void showCart();
+    void checkout();
+    void browseDepartments();
+    void listCoursesInDepartment(Department& dept);
+    void addCourseToCart(Department& dept);
+};
