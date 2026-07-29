@@ -48,3 +48,25 @@ void AdminInterface::addCourseToDepartment() {
         std::cout << "No departments available. Please add a department first.\n";
         return;
     }
+
+    listDepartments();
+    int deptChoice = getMenuChoice(1, (int)departments.size(), "Select a department: ");
+    Department& dept = departments[deptChoice - 1];
+
+    std::string number = getNonEmptyString("Course number: ");
+    std::string name = getNonEmptyString("Course name: ");
+    std:: string schedule = getNonEmptyString("Schedule (e.g. MWF 10:00-11:00 or TR 1:00-2:30): ");
+    double price = getPositiveDouble("Price: ");
+
+    dept.courses.push_back(Course(number, name, schedule, price));
+    std::cout << "Course added successfully\n;
+}
+
+void AdminInterface::saveChanges() {
+    if (saveDepartmentsToCSV(dataFilePath, departments)) {
+        std::cout << "Changes saved successfully\n";
+    }
+    else {
+        std::cout << "Error: could not save to " << dataFilePath << "\n";
+    }
+}
