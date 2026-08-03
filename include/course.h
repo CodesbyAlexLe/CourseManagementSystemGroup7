@@ -1,18 +1,17 @@
 #pragma once
+#include <string>
 
 class Course {
-private:
-    char number[20];
-    char name[100];
-    char schedule[10];
+public:
+    std::string courseNumber;
+    std::string courseName;
+    std::string schedule;
     double price;
 
-public:
     Course();
-    Course(const char* number, const char* name, const char* schedule, double price);
-    const char* getNumber() const;
-    const char* getName() const;
-    const char* getSchedule() const;
-    double getPrice() const;
+    Course(const std::string& number, const std::string& name, const std::string& sched, double p);
+
+    // Prints "Name (Number) | Schedule | $Price"
     void display() const;
 };
+
