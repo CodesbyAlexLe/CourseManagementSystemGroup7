@@ -1,23 +1,24 @@
 #pragma once
-#include <string>
-#include <vector>
-#include "course.h"
+#include "Course.h"
 
 class Department {
+private:
+    char name[100];
+    Course* courses;
+    int totalCourses;
+
 public:
-    std::string name;
-    std::vector<Course> courses;
-
     Department();
-    Department(const std::string& n);
+    Department(const char* name);
+    Department(const Department& other);
+    Department& operator=(const Department& other);
+    ~Department();
 
-    // Returns pointer to course with matching number, or nullptr if not found
-    Course* findCourse(const std::string& courseNumber);
+    const char* getName() const;
+    int getTotalCourses() const;
+    Course* getCourse(int index);
+    const Course* getCourse(int index) const;
+    void addCourse(const Course& course);
+    void listCourses() const;
 };
 
-// Returns pointer to department with matching name, or nullptr if not found
-Department* findDepartment(std::vector<Department>& departments, const std::string& name);
-
-// CSV format: DepartmentName, CourseNumber, CourseName, Schedule, Price
-bool loadDepartmentsFromCSV(const std::string& filename, std::vector<Department>& departments);
-bool saveDepartmentsToCSV(const std::string& filename, const std::vector<Department>& departments);
