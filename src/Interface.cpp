@@ -5,6 +5,8 @@
 #include <sstream>
 #include <cstdlib>
 
+// If the input stream has been closed (e.g. Ctrl+D / redirected input ran out),
+// exit cleanly instead of looping forever asking for input that will never come.
 static void exitIfStreamClosed() {
     if (std::cin.eof()) {
         std::cout << "\nInput stream closed. Exiting program.\n";
@@ -12,7 +14,7 @@ static void exitIfStreamClosed() {
     }
 }
 
-Int getMenuChoice(int minVal, int maxVal, const std::string& prompt) {
+int getMenuChoice(int minVal, int maxVal, const std::string& prompt) {
     std::string line;
     int choice;
     while (true) {
@@ -42,6 +44,7 @@ std::string getNonEmptyString(const std::string& prompt) {
 
 double getPositiveDouble(const std::string& prompt) {
     std::string line;
+    double value;
     while (true) {
         std::cout << prompt;
         std::getline(std::cin, line);
@@ -50,7 +53,7 @@ double getPositiveDouble(const std::string& prompt) {
         if (ss >> value && ss.eof() && value > 0) {
             return value;
         }
-        std::cout << "Invalid input, please enter a valid price.\n"
+        std::cout << "Invalid input, please enter a valid price.\n";
     }
 }
 
