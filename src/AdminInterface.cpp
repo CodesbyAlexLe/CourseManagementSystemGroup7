@@ -2,7 +2,7 @@
 #include "Interface.h"
 #include <iostream>
 
-AdminInterface::AdminInterface(std::vector<Department>& depts, const std::string% filePath)
+AdminInterface::AdminInterface(std::vector<Department>& depts, const std::string& filePath)
     : departments(depts), dataFilePath(filePath) {
 }
 
@@ -10,7 +10,7 @@ void AdminInterface::run() {
     while (true) {
         std::cout << "\n----- Admin Main Menu -----\n";
         std::cout << "1. List Departments\n";
-        std::cout << "2. Add Departments\n";
+        std::cout << "2. Add Department\n";
         std::cout << "3. Add Course to Department\n";
         std::cout << "4. Save Changes in CSV\n";
         std::cout << "5. Exit\n";
@@ -40,7 +40,7 @@ void AdminInterface::listDepartments() {
 void AdminInterface::addDepartment() {
     std::string name = getNonEmptyString("Department name: ");
     departments.push_back(Department(name));
-    std::cout <<"Department added successfully\n;
+    std::cout << "Department added successfully\n";
 }
 
 void AdminInterface::addCourseToDepartment() {
@@ -55,11 +55,11 @@ void AdminInterface::addCourseToDepartment() {
 
     std::string number = getNonEmptyString("Course number: ");
     std::string name = getNonEmptyString("Course name: ");
-    std:: string schedule = getNonEmptyString("Schedule (e.g. MWF 10:00-11:00 or TR 1:00-2:30): ");
+    std::string schedule = getNonEmptyString("Schedule (e.g. MWF 10:00-11:00 or TR 1:00-2:30): ");
     double price = getPositiveDouble("Price: ");
 
     dept.courses.push_back(Course(number, name, schedule, price));
-    std::cout << "Course added successfully\n;
+    std::cout << "Course added successfully\n";
 }
 
 void AdminInterface::saveChanges() {
