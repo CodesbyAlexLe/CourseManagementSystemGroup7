@@ -1,55 +1,90 @@
-#include "Department.h"
-#include <cstring>
-#include <iostream>
+#include "department.h"
+#include <fstream>
+#include <sstream>
 
-Department::Department() : courses(nullptr), totalCourses(0) { name[0] = '\0'; }
+Department::Department() : name("") {}
+Department::Department(const std::string& n) : name(n) {}
 
-Department::Department(const char* newName) : courses(nullptr), totalCourses(0) {
-    std::strncpy(name, newName, sizeof(name) - 1); name[sizeof(name) - 1] = '\0';
-}
-
-Department::Department(const Department& other) : courses(nullptr), totalCourses(other.totalCourses) {
-    std::strncpy(name, other.name, sizeof(name));
-    if (totalCourses > 0) {
-        courses = new Course[totalCourses];
-        for (int i = 0; i < totalCourses; ++i) courses[i] = other.courses[i];
-    }
-}
-
-Department& Department::operator=(const Department& other) {
-    if (this != &other) {
-        delete[] courses;
-        courses = nullptr;
-        totalCourses = other.totalCourses;
-        std::strncpy(name, other.name, sizeof(name));
-        if (totalCourses > 0) {
-            courses = new Course[totalCourses];
-            for (int i = 0; i < totalCourses; ++i) courses[i] = other.courses[i];
+Course* Department::findCourse(const std::string& courseNumber) {
+    for (auto& c : courses) {
+        if (c.courseNumber == courseNumber) {
+            return &c;
         }
     }
-    return *this;
+    return nullptr;
 }
 
-Department::~Department() { delete[] courses; }
-const char* Department::getName() const { return name; }
-int Department::getTotalCourses() const { return totalCourses; }
-Course* Department::getCourse(int index) { return (index >= 0 && index < totalCourses) ? &courses[index] : nullptr; }
-const Course* Department::getCourse(int index) const { return (index >= 0 && index < totalCourses) ? &courses[index] : nullptr; }
-
-void Department::addCourse(const Course& course) {
-    Course* biggerArray = new Course[totalCourses + 1];
-    for (int i = 0; i < totalCourses; ++i) biggerArray[i] = courses[i];
-    biggerArray[totalCourses] = course;
-    delete[] courses;
-    courses = biggerArray;
-    ++totalCourses;
-}
-
-void Department::listCourses() const {
-    if (totalCourses == 0) { std::cout << "No courses in this department.\n"; return; }
-    for (int i = 0; i < totalCourses; ++i) {
-        std::cout << i + 1 << ". ";
-        courses[i].display();
+Department* findDepartment(std::vector<Department>& departments, const std::string& name) {
+    for (auto& d : departments) {
+        if (d.name == name) {
+            return &d;
+        }
     }
+    return nullptr;
 }
 
+// Splits a CSV line into fields (simple comma split, no quoted-field support)
+static std::vector<std::string> splitCSVLine(const std::string& line) {
+    std::vector<std::string> fields;
+    std::stringstream ss(line);
+    std::string field;
+    while (std::getline(ss, field, ',')) {
+        fields.push_back(field);
+    }
+    return fields;
+}
+
+bool loadDepartmentsFromCSV(const std::string& filename, std::vector<Department>& departments) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        // No existing file yet is not a fatal error - start with an empty catalog
+        return false;
+    }
+
+    departments.clear();
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line.empty()) continue;
+        std::vector<std::string> fields = splitCSVLine(line);
+        if (fields.size() < 5) continue;
+
+        double price;
+        try {
+            price = std::stod(fields[4]);
+        }
+        catch (...) {
+            price = 0.0;
+        }
+        Course course(fields[1], fields[2], fields[3], price);
+
+        Department* dept = findDepartment(departments, fields[0]);
+        if (!dept) {
+            departments.push_back(Department(fields[0]));
+            dept = &departments.back();
+        }
+        dept->courses.push_back(course);
+    }
+
+    file.close();
+    return true;
+}
+
+bool saveDepartmentsToCSV(const std::string& filename, const std::vector<Department>& departments) {
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        return false;
+    }
+
+    for (const auto& dept : departments) {
+        for (const auto& course : dept.courses) {
+            file << dept.name << ","
+                << course.courseNumber << ","
+                << course.courseName << ","
+                << course.schedule << ","
+                << course.price << "\n";
+        }
+    }
+
+    file.close();
+    return true;
+}
