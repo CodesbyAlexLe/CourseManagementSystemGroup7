@@ -17,3 +17,4 @@ private:
     void addCourseToDepartment();
     void saveChanges();
 };
+
