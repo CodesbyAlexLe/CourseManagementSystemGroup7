@@ -5,7 +5,7 @@
 
 class AdminInterface {
 public:
-    AdmionInterface(std::vector<Department>& departments, const std::string& dataFilePath);
+    AdminInterface(std::vector<Department>& departments, const std::string& dataFilePath);
     void run();
 
 private:
