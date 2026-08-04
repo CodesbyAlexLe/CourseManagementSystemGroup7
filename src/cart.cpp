@@ -28,4 +28,3 @@ void Cart::display() const {
 const std::vector<Course>& Cart::getItems() const {
     return items;
 }
-
