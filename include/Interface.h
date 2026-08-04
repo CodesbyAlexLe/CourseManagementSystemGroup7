@@ -3,7 +3,9 @@
 #include <vector>
 #include "department.h"
 
-//Shared input validation helpers used by Interface, AdminInterface, and StudentInterface. All loop until a valid value is entered, or exit the program cleanly if the input stream is closed
+// Shared input validation helpers used by Interface, AdminInterface, and
+// StudentInterface. All loop until a valid value is entered, or exit the
+// program cleanly if the input stream is closed (EOF).
 int getMenuChoice(int minVal, int maxVal, const std::string& prompt);
 std::string getNonEmptyString(const std::string& prompt);
 double getPositiveDouble(const std::string& prompt);
@@ -19,3 +21,4 @@ private:
 
     void showInitialMenu();
 };
+#pragma once
