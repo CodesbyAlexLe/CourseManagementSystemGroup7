@@ -21,3 +21,4 @@ Department* findDepartment(std::vector<Department>& departments, const std::stri
 // CSV format: DepartmentName,CourseNumber,CourseName,Schedule,Price
 bool loadDepartmentsFromCSV(const std::string& filename, std::vector<Department>& departments);
 bool saveDepartmentsToCSV(const std::string& filename, const std::vector<Department>& departments);
+#pragma once
