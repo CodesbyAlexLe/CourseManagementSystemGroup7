@@ -15,7 +15,7 @@ void StudentInterface::run() {
         switch (choice) {
         case 1: showCart(); break;
         case 2: browseDepartments(); break;
-        case 3: return; // back to Initial Menu
+        case 3: return;// back to Initial Menu
         }
     }
 }
